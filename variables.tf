@@ -16,16 +16,16 @@ variable "aws_dynamodb_table_name" {
 ##
 ## EKS Variables
 ##
-#variable "eks_k8s_version" {
-#  default = "1.18"
-#  description = "AWS EKS's Kubernetes version"
-#}
-#
+variable "eks_k8s_version" {
+  default = "1.18"
+  description = "AWS EKS's Kubernetes version"
+}
+
 variable "eks_cluster_name" {
   default = "cisp_eks"
   description = "AWS EKS Cluster Name"
 }
-#
+
 variable "eks_node_group_name" {
   default = "cisp_eks_node_group"
   description = "AWS EKS Node Group Name"
