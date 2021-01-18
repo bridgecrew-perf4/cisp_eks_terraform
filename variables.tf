@@ -83,3 +83,19 @@ variable "aws_dynamodb_table_name" {
 #  description = "AWS EKS private networks"
 #}
 
+
+## ECR Variables
+variable "repo-name" {
+  default = ["configserver", "eureka", "auth", "zuul", "segmento" ]
+  description = "The repos that will be created."
+}
+
+variable "image-mutability" {
+  default = "MUTABLE"
+  description = "If the tags can be changed. Options can be 'MUTABLE' or 'IMMUTABLE'"
+}
+
+variable "image-scan" {
+ default = "true"
+ description = "If the images should be scanned when pushed" 
+}
