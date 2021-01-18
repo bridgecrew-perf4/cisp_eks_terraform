@@ -41,28 +41,44 @@ variable "eks_instance_disk_size" {
   description = "AWS EC2 Instance Disk Size in GiB"
 }
 
-##
-## RDS Variables
-##
-#variable "rds_cluster_identifier" {
-#  default = "ballot-rds"
-#  description = "RDS Cluster Identifier"
-#}
 #
-#variable "rds_instance_class" {
-#  default = "db.m5.large"
-#  description = "RDS Instance Class. The m5.large is the latest model (01/2021) with 2vCPUS and 8GiB RAM"
-#}
+# RDS Variables
 #
-#variable "rds_engine" {
-#  default = "mariadb"
-#  description = "RDS Engine used"
-#}
-#
-#variable "rds_engine_version" {
-#  default = "10.5"
-#  description = "RDS Engine version to be used"
-#}
+
+variable "rds_storage" {
+  default = "20"
+  description = "RDS minimum storage size"
+}
+
+variable "rds_type" {
+  default = "gp2"
+  description = "RDS type"
+}
+
+variable "rds_name" {
+  default = "cisp_rds_mariadb"
+  description = "RDS Name"
+}
+
+variable "rds_cluster_identifier" {
+  default = "cisp_rds_mariadb"
+  description = "RDS Cluster Identifier"
+}
+
+variable "rds_instance_class" {
+  default = "db.m5.large"
+  description = "RDS Instance Class. The m5.large is the latest model (01/2021) with 2vCPUS and 8GiB RAM"
+}
+
+variable "rds_engine" {
+  default = "mariadb"
+  description = "RDS Engine used"
+}
+
+variable "rds_engine_version" {
+  default = "10.5"
+  description = "RDS Engine version to be used"
+}
 
 
 ##
