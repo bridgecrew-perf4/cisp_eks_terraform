@@ -39,3 +39,6 @@ terraform.rc
 
 ## Ignore AWS credentials
 credentials
+
+## Ignore Secrets
+secrets
