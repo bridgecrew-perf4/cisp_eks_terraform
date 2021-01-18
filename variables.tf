@@ -25,7 +25,7 @@ variable "eks_cluster_name" {
   default = "cisp_eks"
   description = "AWS EKS Cluster Name"
 }
-
+#
 variable "eks_node_group_name" {
   default = "cisp_eks_node_group"
   description = "AWS EKS Node Group Name"
@@ -60,9 +60,9 @@ variable "rds_name" {
   description = "RDS Name"
 }
 
-variable "rds_cluster_identifier" {
+variable "rds_identifier" {
   default = "cisp_rds_mariadb"
-  description = "RDS Cluster Identifier"
+  description = "RDS Identifier"
 }
 
 variable "rds_instance_class" {
@@ -80,6 +80,17 @@ variable "rds_engine_version" {
   description = "RDS Engine version to be used"
 }
 
+variable "rds_username" {
+  type = string
+  sensitive = true
+  description = "RDS access user."
+}
+
+variable "rds_pass" {
+  type = string
+  sensitive = true
+  description = "RDS password."
+}
 
 ##
 ## VPC Variables
