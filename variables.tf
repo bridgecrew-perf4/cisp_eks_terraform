@@ -61,7 +61,7 @@ variable "rds_name" {
 }
 
 variable "rds_identifier" {
-  default = "cisp_rds_mariadb"
+  default = "cisp-rds-mariadb"
   description = "RDS Identifier"
 }
 
