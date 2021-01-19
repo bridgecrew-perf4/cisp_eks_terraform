@@ -4,13 +4,20 @@ resource "aws_eks_cluster" "main" {
   version = var.eks_k8s_version 
 
   vpc_config {
-    subnet_ids = concat(aws_subnet.public[*].id,aws_subnet.private[*].id)
+    subnet_ids = aws_subnet.public[*].id
+    endpoint_private_access = true
+    endpoint_public_access = true
   }
 
   depends_on = [
     aws_iam_role_policy_attachment.example-AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.example-AmazonEKSVPCResourceController,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 
