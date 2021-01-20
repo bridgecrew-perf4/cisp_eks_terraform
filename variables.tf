@@ -49,6 +49,10 @@ variable "rds_storage" {
   default = "20"
   description = "RDS minimum storage size"
 }
+variable "rds_max_storage" {
+  default = "10000"
+  description = "RDS minimum storage size"
+}
 
 variable "rds_type" {
   default = "gp2"
