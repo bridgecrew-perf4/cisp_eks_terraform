@@ -130,3 +130,15 @@ variable "image-scan" {
  default = "true"
  description = "If the images should be scanned when pushed" 
 }
+
+## ALB
+
+variable "lb_name" {
+ default = "cisp-alb"
+ description = "Load Balancer's name" 
+}
+
+variable "lb_type" {
+ default = "application"
+ description = "Load Balancer's type" 
+}
