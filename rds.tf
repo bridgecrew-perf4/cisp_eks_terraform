@@ -10,7 +10,6 @@ resource "aws_db_subnet_group" "default" {
 
 resource "aws_db_instance" "default" {
   identifier = var.rds_identifier
-  allocated_storage = var.rds_storage
   storage_type = var.rds_type
   engine = var.rds_engine
   engine_version = var.rds_engine_version
@@ -21,6 +20,20 @@ resource "aws_db_instance" "default" {
 #  parameter_group_name = aws_db_parameter_group.default.name
   db_subnet_group_name = aws_db_subnet_group.default.name
   multi_az = true
+
+  ## Security Groups
+  vpc_security_group_ids = list(aws_security_group.allow_mariadb.id)
+  publicly_accessible = true
+ 
+  ## AWS RDS Autoscaling
+  allocated_storage = var.rds_storage
+  max_allocated_storage = var.rds_max_storage
+
+  ## Configurações de Backup
+  backup_retention_period = 30
+
+  ## Não realizar o snapshot ao deletar a instância
   skip_final_snapshot = true
+
 }
 
