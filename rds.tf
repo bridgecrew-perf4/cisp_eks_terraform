@@ -19,6 +19,8 @@ resource "aws_db_instance" "default" {
   password = var.rds_pass
 #  parameter_group_name = aws_db_parameter_group.default.name
   db_subnet_group_name = aws_db_subnet_group.default.name
+ 
+  ## Configuração de MultiAZ
   multi_az = true
 
   ## Security Groups
@@ -30,7 +32,8 @@ resource "aws_db_instance" "default" {
   max_allocated_storage = var.rds_max_storage
 
   ## Configurações de Backup
-  backup_retention_period = 30
+  backup_retention_period = var.rds_backup_retention_period
+  backup_window = var.rds_backup_window
 
   ## Não realizar o snapshot ao deletar a instância
   skip_final_snapshot = true
