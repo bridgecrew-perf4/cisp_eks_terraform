@@ -19,6 +19,8 @@ resource "aws_db_instance" "default" {
   password = var.rds_pass
 #  parameter_group_name = aws_db_parameter_group.default.name
   db_subnet_group_name = aws_db_subnet_group.default.name
+ 
+  ## Configuração de MultiAZ
   multi_az = true
 
   ## Security Groups
