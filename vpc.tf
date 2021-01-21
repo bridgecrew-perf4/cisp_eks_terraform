@@ -18,6 +18,7 @@ resource "aws_subnet" "public" {
   tags = {
     format("kubernetes.io/cluster/%s",var.eks_cluster_name) = "shared"
     "kubernetes.io/cluster/elb" = "1"
+    "kubernetes.io/role/elb" = "1"
     Name = format("pubsub-%s-%s",var.eks_cluster_name,count.index)
   }
 }
@@ -32,6 +33,7 @@ resource "aws_subnet" "private" {
   tags = {
     format("kubernetes.io/cluster/%s",var.eks_cluster_name) = "shared"
     "kubernetes.io/cluster/internal-elb" = "1"
+    "kubernetes.io/role/internal-elb" = "1"
     Name = format("privsub-%s-%s",var.eks_cluster_name,count.index)
   }
 }
