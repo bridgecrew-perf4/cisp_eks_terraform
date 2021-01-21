@@ -96,6 +96,16 @@ variable "rds_pass" {
   description = "RDS password."
 }
 
+variable "rds_backup_retention_period" {
+  default = 30
+  description = "RDS Database backup retention in days"
+}
+
+variable "rds_backup_window" {
+  default = "00:00-01:00"
+  description = "RDS Backup window"
+}
+
 ##
 ## VPC Variables
 ##
