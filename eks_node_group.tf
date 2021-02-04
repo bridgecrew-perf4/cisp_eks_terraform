@@ -1,18 +1,21 @@
+##
+## AWS EKS Node Group
+##
 resource "aws_eks_node_group" "main" {
-  cluster_name = aws_eks_cluster.main.name
+  cluster_name    = aws_eks_cluster.main.name
   node_group_name = var.eks_node_group_name
-  node_role_arn = aws_iam_role.main2.arn
-  subnet_ids =  aws_subnet.public[*].id
+  node_role_arn   = aws_iam_role.main2.arn
+  subnet_ids      = aws_subnet.private[*].id
 
 
   scaling_config {
     desired_size = 1
-    max_size = 1
-    min_size = 1
+    max_size     = 1
+    min_size     = 1
   }
 
   instance_types = var.eks_instance_types
-  disk_size = var.eks_instance_disk_size
+  disk_size      = var.eks_instance_disk_size
 
   depends_on = [
     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
