@@ -6,7 +6,9 @@ resource "aws_iam_openid_connect_provider" "default" {
     "sts.amazonaws.com",
   ]
 
-  thumbprint_list = []
+  thumbprint_list = [
+  "9e99a48a9960b14926bb7f3b02e22da2b0ab7280",
+  ]
 }
 
 ## Criação da função de gerenciamento do LB pelo EKS
@@ -34,7 +36,7 @@ resource "aws_iam_role" "eks_lb" {
 }
 
 ## Realizando a intergraçao da política com a função.
-resource "aws_iam_policy_attachment" "test-attach" {
+resource "aws_iam_policy_attachment" "attach" {
   name       = "cisp_eks_lb"
   roles      = [aws_iam_role.eks_lb.name]
   policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
