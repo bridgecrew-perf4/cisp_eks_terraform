@@ -18,9 +18,9 @@ resource "aws_eks_node_group" "main" {
   disk_size      = var.eks_instance_disk_size
 
   depends_on = [
-    aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.example-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.example-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
 
   #lifecycle {
@@ -28,7 +28,7 @@ resource "aws_eks_node_group" "main" {
   #}
 
   tags = {
-    format("k8s.oi/cluster-autoscaler/%s",var.eks_cluster_name) = owned
+    format("k8s.oi/cluster-autoscaler/%s",var.eks_cluster_name) = "owned"
     "k8s.io/cluster-autoscaer/enabled" = true
   }
 
