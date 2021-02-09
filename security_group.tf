@@ -23,6 +23,27 @@ resource "aws_security_group" "allow_mariadb" {
   }
 }
 
+resource "aws_security_group" "zuul" {
+  name = "Allow connection to port 8050 on Zuul API Gateway"
+  description = "Allow connection to port 8050 on Zuul API Gateway"
+
+  ingress {
+    from_port = 8050
+    to_port = 8050
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    description = "Allow output to all addresses"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+ 
+}
+
 
 resource "aws_security_group" "allow_output_from_private" {
   name        = "Allow Egress from EKS node"
