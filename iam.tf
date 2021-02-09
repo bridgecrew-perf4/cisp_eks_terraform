@@ -64,3 +64,59 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
   role       = aws_iam_role.main2.name
 }
 
+
+
+##
+## AWS EKS Auto Scaler role and policy
+##
+resource "aws_iam_role" "AmazonEKSClusterAutoscalerRole" {
+  name = "AmazonEKSClusterAutoscalerRole"
+  
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::707413322123:oidc-provider/oidc.eks.sa-east-1.amazonaws.com/id/1BEF3D72EE241C0D012E53A2DFAD560E"
+        },
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Condition" : {
+          "StringEquals" : {
+            "oidc.eks.sa-east-1.amazonaws.com/id/1BEF3D72EE241C0D012E53A2DFAD560E:sub" : "system:serviceaccount:kube-system:cluster-autoscaler"
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "AmazonEKSClusterAutoscalerPolicy" {
+  name = "AmazonEKSClusterAutoscalerPolicy"
+  description = "Allows AutoScaling for EKS Node Group"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Action": [
+              "autoscaling:DescribeAutoScalingGroups",
+              "autoscaling:DescribeAutoScalingInstances",
+              "autoscaling:DescribeLaunchConfigurations",
+              "autoscaling:DescribeTags",
+              "autoscaling:SetDesiredCapacity",
+              "autoscaling:TerminateInstanceInAutoScalingGroup",
+              "ec2:DescribeLaunchTemplateVersions"
+          ],
+          "Resource": "*",
+          "Effect": "Allow"
+      }
+  ]
+}
+  EOF
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKSClusterAutoscalerPolicy" {
+  policy_arn = aws_iam_policy.AmazonEKSClusterAutoscalerPolicy.arn
+  role = aws_iam_role.AmazonEKSClusterAutoscalerRole.name
+}
