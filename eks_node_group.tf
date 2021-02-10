@@ -28,8 +28,8 @@ resource "aws_eks_node_group" "main" {
   #}
 
   tags = {
-    format("k8s.oi/cluster-autoscaler/%s",var.eks_cluster_name) = "owned"
-    "k8s.io/cluster-autoscaer/enabled" = true
+    format("k8s.io/cluster-autoscaler/%s",var.eks_cluster_name) = "owned"
+    "k8s.io/cluster-autoscaler/enabled" = true
   }
 
 }
