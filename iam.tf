@@ -78,12 +78,12 @@ resource "aws_iam_role" "AmazonEKSClusterAutoscalerRole" {
       {
         "Effect" : "Allow",
         "Principal" : {
-          "Federated" : "arn:aws:iam::707413322123:oidc-provider/oidc.eks.sa-east-1.amazonaws.com/id/1BEF3D72EE241C0D012E53A2DFAD560E"
+          "Federated" : format("arn:aws:iam::707413322123:oidc-provider/%s", replace(aws_eks_cluster.main.identity[0].oidc[0].issuer,"https://",""))
         },
         "Action" : "sts:AssumeRoleWithWebIdentity",
         "Condition" : {
           "StringEquals" : {
-            "oidc.eks.sa-east-1.amazonaws.com/id/1BEF3D72EE241C0D012E53A2DFAD560E:sub" : "system:serviceaccount:kube-system:cluster-autoscaler"
+            format("%s:sub",replace(aws_eks_cluster.main.identity[0].oidc[0].issuer,"https://","")) : "system:serviceaccount:kube-system:cluster-autoscaler"
           }
         }
       }
