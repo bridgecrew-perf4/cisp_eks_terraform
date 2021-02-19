@@ -23,6 +23,30 @@ resource "aws_security_group" "allow_mariadb" {
   }
 }
 
+resource "aws_security_group" "allow_postgresql" {
+
+  name        = "postgresql_sg"
+  description = "PostgreSQL Security Group"
+  vpc_id      = data.aws_vpc.selected.id
+
+  ingress {
+    description = "PostgreSQL Access"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    # cidr_blocks é a origem da conexão
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow output to all addresses"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_security_group" "zuul" {
   name = "Allow connection to port 8050 on Zuul API Gateway"
   description = "Allow connection to port 8050 on Zuul API Gateway"

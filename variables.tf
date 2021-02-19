@@ -59,12 +59,12 @@ variable "rds_type" {
   description = "RDS type"
 }
 
-variable "rds_name" {
+variable "rds_apps_name" {
   default     = "cisp_rds_mariadb"
   description = "RDS Name"
 }
 
-variable "rds_identifier" {
+variable "rds_apps_identifier" {
   default     = "cisp-rds-mariadb"
   description = "RDS Identifier"
 }
@@ -74,12 +74,12 @@ variable "rds_instance_class" {
   description = "RDS Instance Class. The m5.large is the latest model (01/2021) with 2vCPUS and 8GiB RAM"
 }
 
-variable "rds_engine" {
+variable "rds_apps_engine" {
   default     = "mariadb"
   description = "RDS Engine used"
 }
 
-variable "rds_engine_version" {
+variable "rds_apps_engine_version" {
   default     = "10.5"
   description = "RDS Engine version to be used"
 }
@@ -104,6 +104,38 @@ variable "rds_backup_retention_period" {
 variable "rds_backup_window" {
   default     = "00:00-01:00"
   description = "RDS Backup window"
+}
+
+##
+## AWS RDS PostgreSQL
+##
+variable "rds_api_name" {
+  default = "cisp_api_kong"
+  description = "RDS Name"
+}
+variable "rds_api_engine" {
+  default     = "postgres"
+  description = "RDS Engine used for Kong API"
+}
+
+variable "rds_api_engine_version" {
+  default     = "11"
+  description = "RDS Engine version to be used"
+}
+variable "rds_api_identifier" {
+  default     = "cisp-rds-api-postgresql"
+  description = "RDS Identifier"
+}
+variable "rds_api_username" {
+  type        = string
+  sensitive   = true
+  description = "RDS access user."
+}
+
+variable "rds_api_pass" {
+  type        = string
+  sensitive   = true
+  description = "RDS password."
 }
 
 ##
