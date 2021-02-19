@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: konga
+  namespace: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: konga
+  template:
+    metadata:
+      labels:
+        app: konga
+    spec:
+      containers:
+      - name: konga
+        image: pantsel/konga
+        name: konga
+        ports:
+        - containerPort: 1337
+          name: konga
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: konga-configmap
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: konga-configmap
+  namespace: kong
+data:
+  DB_ADAPTER: "postgres"
+  DB_HOST: "192.168.0.18"
+  DB_PORT: "5432"
+  DB_USER: "kong"
+  DB_PASSWORD: "kong"
+  DB_DATABASE: "konga"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: konga
+  namespace: kong
+spec:
+  type: NodePort
+  ports:
+  - name: web-ui
+    port: 1337
+    protocol: TCP
+    targetPort: 1337
+  selector:
+    app: konga
+
