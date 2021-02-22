@@ -159,7 +159,7 @@ variable "private_subnets" {
 
 ## ECR Variables
 variable "repo-name" {
-  default     = ["cisp-configserver", "cisp-eureka", "cisp-auth", "cisp-zuul", "cisp-segmento", "cisp-frontend"]
+  default     = ["cisp-associada", "cisp-departamento", "cisp-gateway", "cisp-segmento"]
   description = "The repos that will be created."
 }
 
