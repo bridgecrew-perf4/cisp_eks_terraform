@@ -8,5 +8,8 @@ output "kubeconfig-certificate-authority-data" {
 }
 
 output "rds_mariadb_endpoint" {
-  value = aws_db_instance.default.endpoint
+  value = aws_db_instance.apps.endpoint
+}
+output "rds_postgresql_endpoint" {
+  value = aws_db_instance.api.endpoint
 }
