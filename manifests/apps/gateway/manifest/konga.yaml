@@ -24,6 +24,14 @@ spec:
         envFrom:
         - configMapRef:
             name: konga-configmap
+        env:
+        - name: DB_USER
+          value: kong
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: password
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -32,10 +40,8 @@ metadata:
   namespace: kong
 data:
   DB_ADAPTER: "postgres"
-  DB_HOST: "192.168.0.18"
+  DB_HOST: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
   DB_PORT: "5432"
-  DB_USER: "kong"
-  DB_PASSWORD: "kong"
   DB_DATABASE: "konga"
 ---
 apiVersion: v1
