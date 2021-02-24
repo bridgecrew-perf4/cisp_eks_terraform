@@ -813,3 +813,17 @@ spec:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
 
+      apiVersion: autoscaling/v1
+---
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gateway-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ingress-kong
+  minReplicas: 3
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
