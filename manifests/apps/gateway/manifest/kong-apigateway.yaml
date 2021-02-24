@@ -799,9 +799,8 @@ spec:
         image: busybox
         name: wait-for-postgres
       restartPolicy: OnFailure
-
-      apiVersion: autoscaling/v1
 ---
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: gateway-hpa
