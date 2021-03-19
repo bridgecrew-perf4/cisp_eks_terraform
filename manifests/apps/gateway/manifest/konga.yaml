@@ -24,6 +24,14 @@ spec:
         envFrom:
         - configMapRef:
             name: konga-configmap
+        env:
+        - name: DB_USER
+          value: kong
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: password
 ---
 apiVersion: v1
 kind: ConfigMap

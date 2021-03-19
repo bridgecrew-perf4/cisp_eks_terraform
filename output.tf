@@ -11,7 +11,6 @@ output "rds_mariadb_endpoint" {
   value = aws_db_instance.apps.endpoint
 }
 
-
 output "rsd_postgresql_endpoint" {
   value = aws_db_instance.api.endpoint
 }
