@@ -120,3 +120,34 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterAutoscalerPolicy" {
   policy_arn = aws_iam_policy.AmazonEKSClusterAutoscalerPolicy.arn
   role = aws_iam_role.AmazonEKSClusterAutoscalerRole.name
 }
+
+
+##
+## EKS access to RDS service
+##
+resource "aws_iam_policy" "AmazonEKStoRDSAccess" {
+  name = "AmazonEKStoRDSAccess"
+  description = "Policy for EKS service reach RDS service"
+
+  policy = <<EOF
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Effect": "Allow",
+         "Action": [
+             "rds-db:connect"
+         ],
+         "Resource": "*"
+      }
+   ]
+}
+  EOF
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKStoRDSAccess" {
+  policy_arn = aws_iam_policy.AmazonEKStoRDSAccess.arn
+  role = aws_iam_role.main2.name
+}
+
+
