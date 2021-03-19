@@ -110,7 +110,7 @@ variable "rds_backup_window" {
 ## AWS RDS PostgreSQL
 ##
 variable "rds_api_name" {
-  default = "cisp_api_kong"
+  default = "kong"
   description = "RDS Name"
 }
 variable "rds_api_engine" {
@@ -145,7 +145,7 @@ variable "vpc_id" {
   default     = "vpc-4dbce728"
   description = "AWS VPC default id value for CISP account"
 }
-#
+
 variable "public_subnets" {
   default     = ["172.31.200.0/24", "172.31.201.0/24", "172.31.202.0/24"]
   description = "AWS EKS public networks"
@@ -159,7 +159,7 @@ variable "private_subnets" {
 
 ## ECR Variables
 variable "repo-name" {
-  default     = ["cisp-configserver", "cisp-eureka", "cisp-auth", "cisp-zuul", "cisp-segmento", "cisp-frontend"]
+  default     = ["cisp-associada","cisp-departamento", "cisp-segmento", "cisp-frontend"]
   description = "The repos that will be created."
 }
 
