@@ -583,7 +583,7 @@ spec:
     targetPort: 8443
   selector:
     app: ingress-kong
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -643,9 +643,9 @@ spec:
         - name: KONG_DATABASE
           value: postgres
         - name: KONG_PG_HOST
-          value: "192.168.0.18"
+          value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PASSWORD
-          value: "kong"
+          value: "zx73thU5Au8"
         - name: KONG_PROXY_LISTEN
           value: 0.0.0.0:8000, 0.0.0.0:8443 ssl http2
         - name: KONG_PORT_MAPS
@@ -755,9 +755,9 @@ spec:
         - while true; do kong migrations list; if [[ 0 -eq $? ]]; then exit 0; fi; sleep 2;  done;
         env:
         - name: KONG_PG_HOST
-          value: "192.168.0.18"
+          value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PASSWORD
-          value: ""
+          value: "zx73thU5Au8"
         image: kong:2.2
         name: wait-for-migrations
       serviceAccountName: kong-serviceaccount
@@ -779,9 +779,9 @@ spec:
         - kong migrations bootstrap
         env:
         - name: KONG_PG_PASSWORD
-          value: "kong"
+          value: "zx73thU5Au8"
         - name: KONG_PG_HOST
-          value: "192.168.0.18"
+          value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PORT
           value: "5432"
         image: kong:2.2
@@ -793,7 +793,7 @@ spec:
         - until nc -zv $KONG_PG_HOST $KONG_PG_PORT -w1; do echo 'waiting for db'; sleep 1; done
         env:
         - name: KONG_PG_HOST
-          value: "192.168.0.18"
+          value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PORT
           value: "5432"
         image: busybox
