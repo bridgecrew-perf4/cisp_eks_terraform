@@ -22,6 +22,14 @@ resource "aws_eks_cluster" "main" {
     create_before_destroy = false
   }
 
+  encryption_config {
+    provider {
+      key_arn = data.aws_kms_key.k8s_cmk.arn
+    }
+    resources = ["secrets"]
+  }
+
+
 }
 
 
