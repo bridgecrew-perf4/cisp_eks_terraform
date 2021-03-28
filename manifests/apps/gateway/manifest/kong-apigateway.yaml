@@ -3,6 +3,14 @@ kind: Namespace
 metadata:
   name: kong
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rds-secret
+  namespace: kong
+data:
+  password: eng3M3RoVTVBdTgK
+---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -645,7 +653,10 @@ spec:
         - name: KONG_PG_HOST
           value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PASSWORD
-          value: "zx73thU5Au8"
+          valueFrom:
+            secretKeyRef:
+              name: rds-secret
+              key: password
         - name: KONG_PROXY_LISTEN
           value: 0.0.0.0:8000, 0.0.0.0:8443 ssl http2
         - name: KONG_PORT_MAPS
@@ -662,7 +673,7 @@ spec:
           value: /dev/stderr
         - name: KONG_PROXY_ERROR_LOG
           value: /dev/stderr
-        image: kong:2.2
+        image: 707413322123.dkr.ecr.sa-east-1.amazonaws.com/cisp-gateway:latest
         lifecycle:
           preStop:
             exec:
@@ -757,8 +768,11 @@ spec:
         - name: KONG_PG_HOST
           value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PASSWORD
-          value: "zx73thU5Au8"
-        image: kong:2.2
+          valueFrom:
+            secretKeyRef:
+              name: rds-secret
+              key: password
+        image: 707413322123.dkr.ecr.sa-east-1.amazonaws.com/cisp-gateway
         name: wait-for-migrations
       serviceAccountName: kong-serviceaccount
 ---
@@ -779,12 +793,15 @@ spec:
         - kong migrations bootstrap
         env:
         - name: KONG_PG_PASSWORD
-          value: "zx73thU5Au8"
+          valueFrom:
+            secretKeyRef:
+              name: rds-secret
+              key: password
         - name: KONG_PG_HOST
           value: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
         - name: KONG_PG_PORT
           value: "5432"
-        image: kong:2.2
+        image: 707413322123.dkr.ecr.sa-east-1.amazonaws.com/cisp-gateway
         name: kong-migrations
       initContainers:
       - command:
@@ -812,17 +829,3 @@ spec:
   minReplicas: 3
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
----
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: gateway-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: ingress-kong
-  minReplicas: 3
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 80
-
