@@ -19,7 +19,7 @@ resource "aws_subnet" "public" {
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   cidr_block              = var.public_subnets[count.index]
   map_public_ip_on_launch = true
-
+  
 
   tags = {
     format("kubernetes.io/cluster/%s", var.eks_cluster_name) = "shared"
@@ -37,7 +37,6 @@ resource "aws_subnet" "private" {
   vpc_id            = data.aws_vpc.selected.id
   availability_zone = data.aws_availability_zones.available.names[count.index]
   cidr_block        = var.private_subnets[count.index]
-
 
   tags = {
     format("kubernetes.io/cluster/%s", var.eks_cluster_name) = "shared"
@@ -94,6 +93,10 @@ resource "aws_route_table" "private" {
 
   tags = {
     Name = format("Route table for NAT gatewa %s", count.index)
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
