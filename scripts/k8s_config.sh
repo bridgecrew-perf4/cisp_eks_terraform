@@ -5,6 +5,7 @@
 AWS_REGION=$1
 EKS_CLUSTER=$2
 IAM_CLUSTER_ROLE=$3
+IAM_LB_ROLE=$4
 
 check_aws_credentials(){
   if [ -z "$AWS_ACCESS_KEY_ID" ]; then
@@ -44,7 +45,7 @@ apply_k8s_metric_server(){
 
 apply_eks_cluster_autoscaler(){
 
-  sed -i "s/<YOUR CLUSTER NAME>/$EKS_CLUSTER/g" manifests/cluster-autoscaler-autodiscover.yaml
+  sed "s/<YOUR CLUSTER NAME>/$EKS_CLUSTER/g" manifests/cluster-autoscaler-autodiscover.yaml.tpl > manifests/cluster-autoscaler-autodiscover.yaml
 
   kubectl apply -f manifests/cluster-autoscaler-autodiscover.yaml
 
@@ -62,11 +63,26 @@ apply_eks_cluster_autoscaler(){
 
 }
 
+apply_cert_manager(){
+
+  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
+  sleep 60
+}
+
+apply_eks_alb_controller(){
+  sed "s/<YOUR CLUSTER NAME>/$EKS_CLUSTER/g"  manifests/alb_controller.yaml.tpl > manifests/alb_controller.yaml
+  
+  kubectl apply -f manifests/alb_controller.yaml
+ 
+  kubectl annotate --overwrite=true serviceaccount aws-load-balancer-controller -n kube-system eks.amazonaws.com/role-arn=${IAM_LB_ROLE}
+
+}
 
 
-check_aws_credentials
-update_eks_kubeconfig
-apply_k8s_metric_server
-apply_eks_cluster_autoscaler
-
+#check_aws_credentials
+#update_eks_kubeconfig
+#apply_k8s_metric_server
+#apply_eks_cluster_autoscaler
+#apply_cert_manager
+apply_eks_alb_controller
 
