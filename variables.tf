@@ -14,6 +14,22 @@ variable "aws_dynamodb_table_name" {
 }
 
 ##
+## Route53 Domain
+##
+variable "r53_domain" {
+  default = "cisp.com.br."
+  description = "CISP Domain to be used on R53"
+}
+variable "r53_mariadb_host" {
+  default = "mariadb-user-rds"
+  description = "CISP MariaDB R53 URL host part"
+}
+variable "r53_postgresql_host" {
+  default = "postgresql-kong-rds"
+  description = "CISP KONG PostgreSQL R53 URL host part"
+}
+
+##
 ## EKS Variables
 ##
 variable "eks_k8s_version" {
@@ -84,17 +100,19 @@ variable "rds_apps_engine_version" {
   description = "RDS Engine version to be used"
 }
 
-variable "rds_username" {
-  type        = string
-  sensitive   = true
-  description = "RDS access user."
-}
-
-variable "rds_pass" {
-  type        = string
-  sensitive   = true
-  description = "RDS password."
-}
+#variable "rds_username" {
+#  type        = string
+#  default     = local.creds.rds_apps_username
+#  sensitive   = true
+#  description = "RDS access user."
+#}
+#
+#variable "rds_pass" {
+#  type        = string
+#  default     = local.creds.rds_apps_username
+#  sensitive   = true
+#  description = "RDS password."
+#}
 
 variable "rds_backup_retention_period" {
   default     = 30
@@ -126,17 +144,19 @@ variable "rds_api_identifier" {
   default     = "cisp-rds-api-postgresql"
   description = "RDS Identifier"
 }
-variable "rds_api_username" {
-  type        = string
-  sensitive   = true
-  description = "RDS access user."
-}
-
-variable "rds_api_pass" {
-  type        = string
-  sensitive   = true
-  description = "RDS password."
-}
+#variable "rds_api_username" {
+#  type        = string
+#  default     = local.creds.rds_api_username
+#  sensitive   = true
+#  description = "RDS access user."
+#}
+#
+#variable "rds_api_pass" {
+#  type        = string
+#  default     = local.creds.rds_api_password
+#  sensitive   = true
+#  description = "RDS password."
+#}
 
 ##
 ## VPC Variables
@@ -159,7 +179,7 @@ variable "private_subnets" {
 
 ## ECR Variables
 variable "repo-name" {
-  default     = ["cisp-associada","cisp-departamento", "cisp-segmento", "cisp-frontend"]
+  default     = ["cisp-associada","cisp-departamento", "cisp-segmento", "cisp-frontend","cisp-gateway"]
   description = "The repos that will be created."
 }
 
