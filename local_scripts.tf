@@ -5,7 +5,7 @@ resource "null_resource" "k8s_config" {
   }
 
   provisioner "local-exec" {
-    command = format("./scripts/k8s_config.sh %s %s %s",var.region,var.eks_cluster_name,aws_iam_role.AmazonEKSClusterAutoscalerRole.arn)
+    command = format("./scripts/k8s_config.sh %s %s %s %s",var.region,var.eks_cluster_name,aws_iam_role.AmazonEKSClusterAutoscalerRole.arn, aws_iam_role.eks_lb.arn)
   }
 
 }
