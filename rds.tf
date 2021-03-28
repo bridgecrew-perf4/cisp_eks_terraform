@@ -24,8 +24,8 @@ resource "aws_db_instance" "apps" {
   engine_version = var.rds_apps_engine_version
   instance_class = var.rds_instance_class
   name           = var.rds_apps_name
-  username       = var.rds_username
-  password       = var.rds_pass
+  username       = local.creds.rds_apps_username
+  password       = local.creds.rds_apps_password
   #  parameter_group_name = aws_db_parameter_group.default.name
   db_subnet_group_name = aws_db_subnet_group.default.name
 
@@ -46,7 +46,6 @@ resource "aws_db_instance" "apps" {
 
   ## Não realizar o snapshot ao deletar a instância
   skip_final_snapshot = true
-
 }
 
 ##
@@ -59,8 +58,8 @@ resource "aws_db_instance" "api" {
   engine_version = var.rds_api_engine_version
   instance_class = var.rds_instance_class
   name           = var.rds_api_name
-  username       = var.rds_api_username
-  password       = var.rds_api_pass
+  username       = local.creds.rds_api_username
+  password       = local.creds.rds_api_password
   #  parameter_group_name = aws_db_parameter_group.default.name
   db_subnet_group_name = aws_db_subnet_group.default.name
 
@@ -81,6 +80,5 @@ resource "aws_db_instance" "api" {
 
   ## Não realizar o snapshot ao deletar a instância
   skip_final_snapshot = true
-
 }
 
