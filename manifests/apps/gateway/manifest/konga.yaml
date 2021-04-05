@@ -28,10 +28,7 @@ spec:
         - name: DB_USER
           value: kong
         - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-pass
-              key: password
+          value: zx73thU5Au8
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -43,8 +40,6 @@ data:
   DB_HOST: "cisp-rds-api-postgresql.cstlzoc1hdwc.sa-east-1.rds.amazonaws.com"
   DB_PORT: "5432"
   DB_USER: "kong"
-  DB_PASSWORD: "zx73thU5Au8"
-  DB_DATABASE: "konga"
 ---
 apiVersion: v1
 kind: Service
@@ -60,4 +55,27 @@ spec:
     targetPort: 1337
   selector:
     app: konga
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-konga
+  namespace: kong
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+# Caso queira utilizar SSL, é necessário subir o certificado no ACM e descomentar as linhas abaixo.
+#    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+#    alb.ingress.kubernetes.io/certificate-arn:  # Apontar a ARN do certificado que está no ACM.
+spec:
+  rules:
+  #- host: # Domínio a ser utilizado no Ingress.
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: konga
+          servicePort: 1337
+---
 
