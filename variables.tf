@@ -21,11 +21,11 @@ variable "r53_domain" {
   description = "CISP Domain to be used on R53"
 }
 variable "r53_mariadb_host" {
-  default = "mariadb-user-rds"
+  default = "mariadb-user-rds.maxxi"
   description = "CISP MariaDB R53 URL host part"
 }
 variable "r53_postgresql_host" {
-  default = "postgresql-kong-rds"
+  default = "postgresql-kong-rds.maxxi"
   description = "CISP KONG PostgreSQL R53 URL host part"
 }
 
@@ -176,16 +176,23 @@ variable "private_subnets" {
   description = "AWS EKS private networks"
 }
 
-
+##
 ## ECR Variables
+##
 variable "repo-name" {
-  default     = ["cisp-associada","cisp-departamento", "cisp-segmento", "cisp-frontend","cisp-gateway"]
+  default     = ["cisp-associada","cisp-departamento", "cisp-segmento", "cisp-frontend","cisp-gateway","cisp-newapp"]
   description = "The repos that will be created."
 }
 
 variable "image-mutability" {
   default     = "MUTABLE"
   description = "If the tags can be changed. Options can be 'MUTABLE' or 'IMMUTABLE'"
+}
+
+variable "count-number" {
+  default = 10
+  type = number
+  description = "Numero de dias para retern imagens sem tag"
 }
 
 variable "image-scan" {
