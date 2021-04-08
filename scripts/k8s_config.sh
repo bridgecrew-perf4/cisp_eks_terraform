@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 AWS_REGION=$1
 EKS_CLUSTER=$2
 IAM_CLUSTER_ROLE=$3
@@ -79,10 +78,10 @@ apply_eks_alb_controller(){
 }
 
 
-#check_aws_credentials
-#update_eks_kubeconfig
-#apply_k8s_metric_server
-#apply_eks_cluster_autoscaler
-#apply_cert_manager
+check_aws_credentials
+update_eks_kubeconfig
+apply_k8s_metric_server
+apply_eks_cluster_autoscaler
+apply_cert_manager
 apply_eks_alb_controller
 
