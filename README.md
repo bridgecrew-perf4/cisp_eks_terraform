@@ -26,3 +26,4 @@ export AWS_DEFAULT_REGION="xx-xxxx-x"
 | security_group.tf | Responsável por realizar a criação do SG para as instâncias | 
 | variables.tf      | Arquivo com as váriaveis utilizadas pelo projeto |
 | vpc.tf            | Responsável por criar as redes para uso do cluster |
+| rat-cisp.pdf      | Relatório de Atendimento Técnico
