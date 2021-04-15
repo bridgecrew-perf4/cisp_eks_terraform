@@ -33,7 +33,7 @@ resource "aws_db_instance" "apps" {
   multi_az = true
 
   ## Security Groups e acesso público (não funciona tendo a rede como privada)
-  vpc_security_group_ids = list(aws_security_group.allow_mariadb.id)
+  vpc_security_group_ids = tolist([aws_security_group.allow_mariadb.id])
   publicly_accessible    = false
 
   ## AWS RDS Autoscaling
@@ -67,7 +67,7 @@ resource "aws_db_instance" "api" {
   multi_az = false
 
   ## Security Groups e acesso público (não funciona tendo a rede como privada)
-  vpc_security_group_ids = list(aws_security_group.allow_postgresql.id)
+  vpc_security_group_ids = tolist([aws_security_group.allow_postgresql.id])
   publicly_accessible    = false
 
   ## AWS RDS Autoscaling
