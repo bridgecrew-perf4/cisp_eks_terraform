@@ -1,7 +1,7 @@
 # Projeto de Implementação do EKS, ECR e RDS via Terraform
 
 
-Para utilizar esse projeto é necessário exportar as variáveis de autenticação da AWS. Isso pode ser feito via variáveis de ambiente do linux como mostrado abaixo:
+Para utilizar esse projeto é necessário possuir o terraform instalado localmente e exportar as variáveis de autenticação da AWS. Isso pode ser feito via variáveis de ambiente do linux como mostrado abaixo:
 
 ```
 export AWS_ACCESS_KEY_ID="xxxxxxxxxxxxx"
@@ -26,3 +26,14 @@ export AWS_DEFAULT_REGION="xx-xxxx-x"
 | security_group.tf | Responsável por realizar a criação do SG para as instâncias | 
 | variables.tf      | Arquivo com as váriaveis utilizadas pelo projeto |
 | vpc.tf            | Responsável por criar as redes para uso do cluster |
+
+
+## Lista de comandos do terraform
+
+```
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+
+```
